@@ -6,6 +6,4 @@ import javax.persistence.Entity
 data class User (
         var firstName: String? = null,
         var lastName: String? = null,
-        var email: String? = null) : com.nik.kotlin.gymapp.common.entity.Entity() {
-
-}
+        var email: String? = null) : com.nik.kotlin.gymapp.common.entity.Entity()

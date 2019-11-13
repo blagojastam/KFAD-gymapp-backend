@@ -1,13 +1,11 @@
 package com.nik.kotlin.gymapp.common.entity
 
+import java.util.*
+import javax.persistence.*
 import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.GenerationType
-import javax.persistence.Id
 
 @Entity
-abstract class Entity(
+@Inheritance(strategy = InheritanceType.JOINED)
+abstract class Entity (
         @Id
-        @GeneratedValue(strategy = GenerationType.AUTO)
-        var ID : Long? = null) {
-}
+        var ID: String = UUID.randomUUID().toString())

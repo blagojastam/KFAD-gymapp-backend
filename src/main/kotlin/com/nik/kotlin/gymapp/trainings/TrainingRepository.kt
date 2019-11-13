@@ -1,7 +1,7 @@
-package com.nik.kotlin.gymapp.users
+package com.nik.kotlin.gymapp.trainings
 
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 
 @Repository
-interface UserRepository : JpaRepository<User, String>
+interface TrainingRepository : JpaRepository<Training, String>
