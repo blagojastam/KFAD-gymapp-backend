@@ -8,4 +8,5 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/api/trainings")
 class TrainingControllerImpl
-(@Autowired serviceImpl: TrainingServiceImpl) : ControllerImpl<Training>(serviceImpl)
+(@Autowired serviceImpl: TrainingServiceImpl,
+ @Autowired representationModelAssembler: TrainingRepresentationModelAssembler) : ControllerImpl<Training>(serviceImpl, representationModelAssembler)

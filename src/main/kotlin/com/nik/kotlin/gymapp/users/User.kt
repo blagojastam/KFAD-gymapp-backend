@@ -1,5 +1,6 @@
 package com.nik.kotlin.gymapp.users
 
+import com.fasterxml.jackson.annotation.JsonRootName
 import javax.persistence.Entity
 
 @Entity
