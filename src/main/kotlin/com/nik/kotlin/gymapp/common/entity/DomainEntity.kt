@@ -7,6 +7,6 @@ import javax.persistence.Entity
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-abstract class Entity (
+abstract class DomainEntity (
         @Id
         var ID: String = UUID.randomUUID().toString())

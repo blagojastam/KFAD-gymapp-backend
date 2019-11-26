@@ -1,5 +1,6 @@
 package com.nik.kotlin.gymapp.trainings
 
+import com.nik.kotlin.gymapp.common.entity.DomainEntity
 import com.nik.kotlin.gymapp.users.User
 import java.time.LocalDateTime
 import javax.persistence.ElementCollection
@@ -33,4 +34,4 @@ data class Training (
 
         var canceled: Boolean? = null
 
-) : com.nik.kotlin.gymapp.common.entity.Entity()
+) : DomainEntity()

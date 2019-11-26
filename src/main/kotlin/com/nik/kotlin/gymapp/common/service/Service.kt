@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service
 @Service
 interface Service<T> {
     fun addNew(entity : T) : T
-    fun getById(ID : String) : T
-    fun getAll(size : Int, page: Int, sort: Sort) : Page<T>
+    fun findById(ID : String) : T
+    fun findAll(size : Int, page: Int, sort: Sort) : Page<T>
     fun update(entity: T, ID: String) : T
     fun delete(ID : String) : Boolean
 }

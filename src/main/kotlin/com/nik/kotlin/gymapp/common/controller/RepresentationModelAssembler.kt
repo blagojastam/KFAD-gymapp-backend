@@ -1,12 +1,12 @@
 package com.nik.kotlin.gymapp.common.controller
 
-import com.nik.kotlin.gymapp.common.entity.Entity
+import com.nik.kotlin.gymapp.common.entity.DomainEntity
 import org.springframework.hateoas.server.RepresentationModelAssembler
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder
 import org.springframework.stereotype.Component
 
 @Component
-abstract class RepresentationModelAssembler<T : Entity> : RepresentationModelAssembler<T, RepresentationModel<T>>  {
+abstract class RepresentationModelAssembler<T : DomainEntity> : RepresentationModelAssembler<T, RepresentationModel<T>>  {
     override fun toModel(entity: T): RepresentationModel<T> {
         val representationModel = RepresentationModel(entity)
 

@@ -6,4 +6,13 @@ import org.springframework.stereotype.Service
 
 @Service("userService")
 class UserServiceImpl
-constructor(@Autowired repository: UserRepository) : ServiceImpl<User>(repository)
+constructor(@Autowired override val repository: UserRepository) : ServiceImpl<User>(repository) {
+
+    fun findByUsername(username: String) : User? {
+        return repository.findByUsername(username)
+    }
+
+    fun findByEmail(email: String) : User? {
+        return repository.findByEmail(email)
+    }
+}

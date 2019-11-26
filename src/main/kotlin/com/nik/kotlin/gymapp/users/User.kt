@@ -1,10 +1,18 @@
 package com.nik.kotlin.gymapp.users
 
-import com.fasterxml.jackson.annotation.JsonRootName
+import com.fasterxml.jackson.annotation.JsonIgnore
+import com.nik.kotlin.gymapp.common.entity.DomainEntity
+import com.nik.kotlin.gymapp.rbac.Role
 import javax.persistence.Entity
+import javax.persistence.EnumType
+import javax.persistence.Enumerated
 
 @Entity
 data class User (
-        var firstName: String? = null,
-        var lastName: String? = null,
-        var email: String? = null) : com.nik.kotlin.gymapp.common.entity.Entity()
+        var email: String? = null,
+        @JsonIgnore var password: String = "",
+        @JsonIgnore val username: String = "",
+        @JsonIgnore @Enumerated(EnumType.STRING) var role: Role = Role.USER
+): DomainEntity() {
+
+}

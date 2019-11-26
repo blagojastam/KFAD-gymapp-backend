@@ -1,34 +1,40 @@
 package com.nik.kotlin.gymapp.common.controller
 
-import com.nik.kotlin.gymapp.common.entity.Entity
+import com.nik.kotlin.gymapp.common.entity.DomainEntity
+import com.nik.kotlin.gymapp.common.service.EntityNotFoundException
 import com.nik.kotlin.gymapp.common.service.Service
-import com.nik.kotlin.gymapp.users.UserRepresentationModel
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Sort
 import org.springframework.hateoas.config.EnableHypermediaSupport
 import org.springframework.hateoas.config.EnableHypermediaSupport.HypermediaType
-import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder
-import org.springframework.hateoas.server.mvc.linkTo
 import org.springframework.http.ResponseEntity
+import org.springframework.security.access.annotation.Secured
 import org.springframework.web.bind.annotation.*
 
 import javax.validation.Valid
 
 @RestController
 @EnableHypermediaSupport(type = [HypermediaType.HAL])
-abstract class ControllerImpl<T : Entity>
+abstract class ControllerImpl<T : DomainEntity>
 (@Autowired protected val service: Service<T>,
  @Autowired protected val representationModelAssembler: RepresentationModelAssembler<T>) : Controller<T>{
 
+    @Secured("ADMIN")
     @PostMapping
     override fun addNew(@RequestBody(required = true) @Valid entity: T) : ResponseEntity<T> {
         return ResponseEntity.ok(service.addNew(entity))
     }
 
-    @GetMapping(path = ["/{ID}"])
+    @GetMapping("/{ID}")
     override fun getById(@PathVariable ID: String) : ResponseEntity<RepresentationModel<T>> {
-        val entity : T = service.getById(ID)
+        val entity : T
+
+        try {
+            entity = service.findById(ID)
+        } catch (exception: EntityNotFoundException) {
+            return ResponseEntity.notFound().build()
+        }
 
         return ResponseEntity.ok(representationModelAssembler.toModel(entity))
     }
@@ -40,18 +46,18 @@ abstract class ControllerImpl<T : Entity>
 
         val sort = Sort.by(sort)
 
-        return ResponseEntity.ok(service.getAll(size, page, sort))
+        return ResponseEntity.ok(service.findAll(size, page, sort))
     }
 
-    @PatchMapping(path = ["/{ID}"])
+    @PatchMapping("/{ID}")
     override fun update(@RequestBody(required = true) @Valid entity: T,
                         @PathVariable ID: String) : ResponseEntity<T> {
 
         return ResponseEntity.ok(service.update(entity, ID))
     }
 
-    @DeleteMapping
-    override fun delete(ID: String) : ResponseEntity<Boolean> {
+    @DeleteMapping("/{ID}")
+    override fun delete(@PathVariable ID: String) : ResponseEntity<Boolean> {
         return ResponseEntity.ok(service.delete(ID));
     }
 }
